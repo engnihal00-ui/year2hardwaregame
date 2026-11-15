@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hardware Heroes – The Ultimate Computer Quest!</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#e9f1ff;--card:#fff;--ink:#17254a;--sun:#ffc933;--teal:#12a594;--coral:#ff6359;--vio:#2f6bff;--line:#cfe3f5;--soft:#f3f9ff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#101a33;--card:#1b2748;--ink:#eef3ff;--line:#33447a;--soft:#223158}}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:600 20px/1.4 Fredoka,"Trebuchet MS",system-ui,sans-serif}
+h1,h2,h3{margin:.2em 0}h2{font-size:1.5em}h3{font-size:1.15em}
+.hide{display:none!important}
+button,select,input{font:inherit;color:inherit}
+button{cursor:pointer;border:0;border-radius:16px;padding:.5em 1.1em;background:var(--vio);color:#fff;font-weight:700;box-shadow:0 4px 0 rgba(0,0,0,.22);min-height:48px}
+button:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.22)}
+button.alt{background:var(--teal)}button.warn{background:var(--coral)}button.sun{background:var(--sun);color:#17254a}
+button:disabled{opacity:.55;cursor:default}
+input,select{background:var(--card);border:3px solid var(--line);border-radius:12px;padding:.4em .7em;min-height:46px}
+.wrap{max-width:1200px;margin:0 auto;padding:14px}
+.card{background:var(--card);border:3px solid var(--line);border-radius:22px;padding:16px;margin:12px 0}
+.center{text-align:center}.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.top{background:var(--ink);color:#fff;position:sticky;top:0;z-index:5;padding:calc(8px + env(safe-area-inset-top,0px)) 14px 8px}
+.top .row{max-width:1200px;margin:auto;justify-content:space-between}
+.logo{font-size:1.25em;font-weight:700}
+nav{display:flex;gap:8px;flex-wrap:wrap}nav button{background:#2c3e78;box-shadow:none}nav button.on{background:var(--sun);color:#17254a}
+.big{font-size:1.3em;padding:.7em 1.4em}
+.clock{font-size:2.4em;font-variant-numeric:tabular-nums;font-weight:700}.clock.low{color:var(--coral)}
+.sb{display:flex;flex-wrap:wrap;gap:10px}.team{flex:1;min-width:150px;background:var(--soft);border:3px solid var(--line);border-radius:16px;padding:8px 12px;text-align:center}
+.team.turn{border-color:var(--sun);background:#fff6d6;color:#17254a}.team b{font-size:1.8em;display:block}
+.bar{height:20px;background:var(--line);border-radius:12px;overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--teal),var(--sun));transition:width .4s}
+ul{margin:.3em 0;padding-left:1.2em}li{margin:.25em 0}
+.opts{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin:14px 0}
+.opt{background:var(--card);color:var(--ink);border:4px solid var(--line);box-shadow:0 5px 0 var(--line);font-size:1.15em;text-align:left;border-radius:20px;padding:.7em 1em}
+.opt span{display:inline-block;width:1.7em;height:1.7em;border-radius:50%;background:var(--sun);color:#17254a;text-align:center;margin-right:.5em}
+.opt.right{background:#c9f7d6;border-color:#1fa855;color:#0b3d1d}.opt.wrong{background:#ffd9d6;border-color:var(--coral);color:#5b1410}
+.opt.reveal{border-color:#1fa855;animation:pop .5s}
+.lock{pointer-events:none}
+.fb{border-radius:18px;padding:12px 16px;margin:10px 0;animation:pop .45s}.fb.ok{background:#c9f7d6;color:#0b3d1d}.fb.no{background:#ffe9c4;color:#4a2f00}
+@keyframes pop{0%{transform:scale(.85);opacity:0}70%{transform:scale(1.04)}100%{transform:scale(1);opacity:1}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.g{position:relative;display:inline-flex;gap:7px;margin:0 9px;vertical-align:middle}
+.g i{width:7px;height:46px;background:var(--ink);border-radius:4px;display:block}
+.g b{position:absolute;left:-6px;right:-6px;top:20px;height:7px;background:var(--coral);border-radius:4px;transform:rotate(-18deg)}
+.ch{border-collapse:collapse;margin:8px auto}.ch td{padding:6px 14px;border-bottom:3px dashed var(--line);font-size:1.2em}.ch td:first-child{font-size:1.9em}
+.vis{text-align:center;margin:10px 0;overflow-x:auto}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}.pair button{background:var(--soft);color:var(--ink);box-shadow:none;border:4px solid var(--line);min-height:70px;font-size:1.3em}
+.pair button.sel{border-color:var(--sun);background:#fff6d6;color:#17254a}.pair button.done{background:#c9f7d6;border-color:#1fa855;color:#0b3d1d}
+.stage{background:#dff4ff;color:#17254a;border:4px solid var(--ink);border-radius:14px;padding:12px;display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
+.stage div{background:#fff;border-radius:14px;padding:8px 14px;text-align:center;font-size:2em}.stage small{display:block;font-size:.5em}
+table.res{width:100%;border-collapse:collapse;font-size:.85em}.res th,.res td{padding:8px;border-bottom:2px solid var(--line);text-align:left;vertical-align:top}
+.pill{display:inline-block;border-radius:20px;padding:.1em .7em;margin:2px;background:var(--soft);border:2px solid var(--line);font-size:.85em}
+.pill.g1{background:#c9f7d6;color:#0b3d1d;border-color:#1fa855}.pill.g2{background:#ffe9c4;color:#4a2f00;border-color:#e0a028}
+.rub input{width:64px}
+.opt.sel{border-color:var(--sun);background:#fff6d6;color:#17254a}.blks{display:grid;gap:6px;margin:8px 0}.blk{padding:8px 14px;border-radius:10px;color:#17254a;font-weight:700;box-shadow:0 3px 0 rgba(0,0,0,.2)}.blk.ev{background:#ffbf00}.blk.lk{background:#a98bff}.blk.vr{background:#ff8c1a}.blk.ss{background:#5cb1d6}.blk.ct{background:#ffab19}</style></head><body>
+
+<section id="setup" class="wrap center"><div style="font-size:4em">🤖⌨️🖱️🖥️🤖</div>
+  <h1 style="font-size:2.4em">HARDWARE HEROES</h1><h2>The Ultimate Computer Quest!</h2>
+  <div class="card"><h2>WELCOME, HARDWARE HEROES!</h2><p>Are you ready to explore the world of computers?</p>
+    <div class="row" style="justify-content:center"><button class="alt" id="mTeam">Team mode</button><button class="sun" id="mPair">Pair mode</button></div>
+    <div id="tin" style="margin:14px 0"></div>
+    <div class="row" style="justify-content:center"><button id="addT" class="sun">+ Add another</button><button id="go" class="big alt">Start the adventure</button></div>
+    <p style="font-size:.8em">Correct first try 10 points · second try 5 points · practical up to 30 · extra challenge bonus 10</p>
+  </div>
+</section>
+
+<div id="app" class="hide">
+<div class="top"><div class="row"><span class="logo">🤖 Hardware Heroes</span>
+  <nav><button data-tab="mission" class="on">Mission Control</button><button data-tab="s1">Session 1</button><button data-tab="s2">Session 2</button><button data-tab="res">Results</button></nav><button id="snd" class="sun">🔊 Sound on</button></div></div>
+<div class="wrap">
+
+<section id="mission" class="tab">
+  <div class="grid">
+    <div class="card center"><div>📅 <span id="date"></span></div><div class="clock" id="now"></div>
+      <div class="row" style="justify-content:center"><button class="sun" id="s1">Session 1</button><button class="sun" id="s2">Session 2</button></div></div>
+    <div class="card center"><h3>⏱ Lesson countdown (50 min)</h3><div class="clock tS">50:00</div><div id="ctlS" class="row" style="justify-content:center"></div>
+      <div style="font-size:.8em">Welcome 5 min · S1 quiz <b class="tA1">20:00</b> · S1 practical <b class="tP1">25:00</b><br>S2 quiz <b class="tA2">20:00</b> · S2 practical <b class="tP2">25:00</b></div></div>
+    <div class="card"><h3>🏆 Scoreboard</h3><div class="sb"></div>
+      <h3>Progress</h3><div class="bar"><i id="pg"></i></div><div id="pgT" style="font-size:.8em"></div></div>
+  </div>
+  <div class="card" id="curM"></div>
+  <div class="grid">
+    <div class="card"><h3>🎯 Learning objectives</h3><ul><li>I can explain what hardware is.</li><li>I can identify input devices.</li><li>I can identify output devices.</li><li>I can explain the function of different devices.</li><li>I can create a simple interactive quiz in PictoBlox.</li></ul></div>
+    <div class="card"><h3>✅ Success criteria</h3><ul><li>I can name hardware devices.</li><li>I can sort devices into input and output.</li><li>I can explain what a device does.</li><li>I can create a quiz question.</li><li>I can check an answer and update a score.</li></ul></div>
+    <div class="card" style="background:#e6fbf1;color:#0b3d1d"><h3>🤝 Value of the month: Respecting others</h3><div style="font-size:3em">🧑‍🤝‍🧑👂✋</div>We respect everyone’s ideas, listen carefully, take turns, and encourage our teammates.</div>
+    <div class="card" style="background:#eceaff;color:#1d1650"><h3>🛡️ Cybersecurity corner</h3><div style="font-size:3em">🤖🛡️</div>Never share your password with other people. Keep your personal information private and ask a trusted adult if something online makes you uncomfortable.</div>
+  </div>
+  <div class="card"><h3>🌟 Extra challenge: Hardware Expert</h3><div id="xtxt"></div><div class="sb" id="xbtn" style="margin-top:10px"></div></div>
+</section>
+
+<section id="chal" class="tab hide"></section>
+
+<section id="prac" class="tab hide">
+  <div class="card row" style="justify-content:space-between"><h2>BUILD YOUR OWN HARDWARE QUIZ!</h2>
+    <div class="center"><div class="clock" id="tPd">25:00</div><div id="ctlP" class="row"></div></div></div>
+  
+  <div id="pbody"></div>
+</section>
+
+<section id="res" class="tab hide"></section>
+<div class="center"><button class="warn" id="reset">Reset game for another class</button></div>
+</div></div>
+
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const h=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.innerHTML=x;return e};
+const T=(n,plain)=>{let s='';while(n>0){const k=Math.min(5,n);n-=k;const x=k==5&&!plain;s+='<span class="g">'+'<i></i>'.repeat(x?4:k)+(x?'<b></b>':'')+'</span>'}return s||'–'};
+const ch=r=>'<table class="ch">'+r.map(x=>`<tr><td>${x[0]}</td><td>${x[1]}</td><td>${T(x[2],x[3])}</td></tr>`).join('')+'</table>';
+function Timer(sec,sel,end){const t={left:sec,run:false,id:0,
+ draw(){const s=String(Math.floor(t.left/60)).padStart(2,'0')+':'+String(t.left%60).padStart(2,'0');$$(sel).forEach(e=>{e.textContent=s;e.classList.toggle('low',t.left<=60)})},
+ start(){if(t.run||t.left<=0)return;t.run=true;t.id=setInterval(()=>{t.left--;t.draw();if(t.left<=0){t.pause();end&&end()}},1000)},
+ pause(){t.run=false;clearInterval(t.id)},reset(){t.pause();t.left=sec;t.draw()}};return t}
+const ctl=(t,el)=>{el.innerHTML='';[['Start','alt',()=>t.start()],['Pause','sun',()=>t.pause()],['Reset','warn',()=>t.reset()]].forEach(([n,c,f])=>{const b=h('button',c,n);b.onclick=f;el.append(b)})};
+
+/* ---------- state ---------- */
+let teams=[],mode='Team',sess=1,pm='A';
+const tS=Timer(3000,'.tS');
+const mkT=n=>({qi:0,att:0,started:false,done:false,mist:[],hs:0,tA:Timer(1200,'.tA'+n,()=>{store[n].done=true;if(sess==n){done=true;chRender()}}),tP:Timer(1500,'.tP'+n)});
+const store={1:mkT(1),2:mkT(2)};let {qi,att,started,done,mist,hs,tA,tP}=store[1];
+function load(n){Object.assign(store[sess],{qi,att,started,done,mist,hs});sess=n;pm=n==1?'A':'B';({qi,att,started,done,mist,hs,tA,tP}=store[n]);Q=QS[n]}
+const mk=n=>({name:n,score:0,ok:0,bad:0,second:0,sk:{},extra:false,prac:[0,0,0,0,0,0],chk:{A:Array(8).fill(0),B:Array(8).fill(0)}});
+
+/* ---------- setup ---------- */
+function tin(){const d=$('#tin');const v=[...d.querySelectorAll('input')].map(i=>i.value);d.innerHTML='';const n=Math.max(v.length,2);
+ for(let i=0;i<n;i++){const e=h('input');e.value=v[i]||`${mode} ${i+1}`;e.style.margin='4px';e.setAttribute('aria-label',`${mode} ${i+1} name`);d.append(e)}}
+$('#mTeam').onclick=()=>{mode='Team';$('#tin').innerHTML='';tin()};$('#mPair').onclick=()=>{mode='Pair';$('#tin').innerHTML='';tin()};
+$('#addT').onclick=()=>{if($$('#tin input').length<8){const v=$$('#tin input').map(i=>i.value);$('#tin').append(h('input'));tin();}};
+tin();
+$('#go').onclick=()=>{teams=$$('#tin input').map((i,k)=>mk(i.value.trim()||`${mode} ${k+1}`));$('#setup').classList.add('hide');$('#app').classList.remove('hide');
+ ctl(tS,$('#ctlS'));ctl(tA,$('#ctlA')||h('div'));ctl(tP,$('#ctlP'));tS.start();sbr();mission();chRender();pracRender();};
+$$('nav button').forEach(b=>b.onclick=()=>tab(b.dataset.tab));
+function tab(n){const sn=n=='s1'?1:n=='s2'?2:0;if(sn)load(sn);const vis=sn?['chal','prac']:[n];$$('.tab').forEach(s=>s.classList.toggle('hide',!vis.includes(s.id)));$$('nav button').forEach(b=>b.classList.toggle('on',b.dataset.tab==n));
+ if(n=='mission')mission();if(n=='res')results();if(sn){chRender();pracRender()}window.scrollTo(0,0)}
+let rs=0;$('#reset').onclick=e=>{if(!rs){rs=1;e.target.textContent='Tap again to reset everything';setTimeout(()=>{rs=0;e.target.textContent='Reset game for another class'},4000)}else location.reload()};
+
+/* ---------- mission control ---------- */
+setInterval(()=>{$('#now').textContent=new Date().toLocaleTimeString('en-GB');$('#date').textContent=new Date().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'})},1000);
+function sbr(){$$('.sb:not(#xbtn)').forEach(s=>{s.innerHTML=teams.map((t,i)=>`<div class="team ${started&&!done&&i==qi%teams.length&&$('#chal')&&!$('#chal').classList.contains('hide')?'turn':''}">${t.name}<b>${t.score+bonus(t)+pracT(t)}</b>${t.extra?'🏅':''}</div>`).join('')})}
+const pracT=t=>t.prac.reduce((a,b)=>a+b,0),bonus=t=>t.extra?10:0;
+function mission(){
+ $('#s1').style.outline=sess==1?'4px solid var(--ink)':'';$('#s2').style.outline=sess==2?'4px solid var(--ink)':'';
+ $('#s1').onclick=()=>tab('s1');$('#s2').onclick=()=>tab('s2');
+ $('#curM').innerHTML=sess==1?'<h2>🖥️ Current mission: Session 1 – Hardware Around Us</h2>Name hardware, sort input and output devices, and explain what each device does.':'<h2>🧠 Current mission: Session 2 – Hardware Quiz</h2>Show what you know about hardware, then build a quiz with a score in PictoBlox.';
+ $('#xtxt').innerHTML=sess==1?'<b>Challenge 1:</b> Add two extra devices: a microphone and headphones.<br><b>Challenge 2:</b> Explain why each device is an input or output device.':'<b>Challenge 3:</b> Add two more questions to your PictoBlox quiz.<br><b>Challenge 4:</b> Make the final message change depending on the score.';
+ $('#xbtn').innerHTML='';teams.forEach(t=>{const b=h('button',t.extra?'alt':'sun',(t.extra?'🏅 ':'')+t.name);b.onclick=()=>{t.extra=!t.extra;mission();sbr()};$('#xbtn').append(b)});
+ const pr=teams.length?teams.reduce((a,t)=>a+t.chk[pm].reduce((x,y)=>x+y,0),0)/(teams.length*8):0;
+ const p=Math.round(((qi/Q.length)*50+pr*50));$('#pg').style.width=p+'%';$('#pgT').textContent=`Challenge: question ${Math.min(qi,Q.length)} of ${Q.length} · Practical checklist: ${Math.round(pr*100)}%`;sbr()}
+
+/* ---------- questions ---------- */
+const ALL=[
+{sk:'hw',ins:'Choose the best answer.',q:'Which one is hardware?',opts:['⌨️ A keyboard','A game program','A website','An app'],pos:2,why:'Hardware is the part of a computer you can touch, like a keyboard.'},
+{sk:'hw',ins:'Choose the best answer.',q:'Can you touch hardware?',opts:['Yes, you can touch it','No, it is invisible','Only when it is turned off','Only with a mouse'],pos:1,why:'Yes! Hardware is the physical part of a computer.'},
+{sk:'hw',tf:1,a:false,ins:'True or false?',q:'Software is the physical part of a computer.',why:'Software is the programs that tell a computer what to do. Hardware is the part you can touch.'},
+{sk:'io',sort:[['⌨️ Keyboard','Input'],['🖥️ Screen','Output'],['🎤 Microphone','Input'],['🔊 Speakers','Output']],ins:'Drag each device to a zone, or tap the device and then tap the zone.',q:'Sort the devices: input or output?',why:'Input devices send information IN. Output devices show or play information OUT.'},
+{sk:'function',match:[['⌨️ Keyboard','Enters letters and numbers'],['🖱️ Mouse','Moves the pointer'],['🖥️ Screen','Shows information'],['🔊 Speakers','Make sound']],ins:'Tap a device, then tap what it does.',q:'What does each device do?',why:'Keyboard types, mouse points, screen shows and speakers make sound.'},
+{sk:'hw',ins:'Choose the best answer.',q:'Which one is software?',opts:['A computer program','A mouse','A screen','A keyboard'],pos:3,why:'A computer program is software. You cannot touch it.'},
+{sk:'io',tf:1,a:true,ins:'True or false?',q:'A keyboard is an input device.',why:'We type on a keyboard to put letters and numbers IN to the computer.'},
+{sk:'function',ins:'Look at the picture.',q:'Which input device records your voice?',vis:'<div style="font-size:4em">🎤</div>',opts:['🎤 Microphone','🖥️ Screen','🔊 Speakers','🎧 Headphones'],pos:0,why:'A microphone records sound. It is an input device.'},
+{sk:'io',fix:[['⌨️','Keyboard','Output','Input'],['🖥️','Screen','Input','Output'],['🔊','Speaker','Output','Output'],['🖱️','Mouse','Input','Input']],ins:'Find the mistakes. Tap a row to change it, then check.',q:'This chart has mistakes. Fix them!',why:'Keyboard and mouse are input. Screen and speaker are output.'},
+{sk:'function',ins:'Detective clue: ⌨️',q:'You want to type your name. Which device do you use?',opts:['⌨️ Keyboard','🔊 Speakers','🖥️ Screen','🎧 Headphones'],pos:2,why:'A keyboard helps us type letters and numbers.'},
+{sk:'io',ins:'Choose the best answer.',q:'Which one is an OUTPUT device?',opts:['🖥️ Screen','⌨️ Keyboard','🖱️ Mouse','📠 Scanner'],pos:1,why:'A screen shows information, so it is an output device.'},
+{sk:'io',tf:1,a:false,ins:'True or false?',q:'A mouse is an output device.',why:'A mouse sends instructions IN, so it is an input device.'},
+{sk:'io',sort:[['🖱️ Mouse','Input'],['📠 Scanner','Input'],['🎧 Headphones','Output'],['🖥️ Screen','Output']],ins:'Drag each device to a zone, or tap the device and then tap the zone.',q:'Sort the devices: input or output?',why:'Mouse and scanner send information in. Headphones and screen give information out.'},
+{sk:'function',match:[['🎤 Microphone','Records sound'],['🎧 Headphones','Lets us hear sound privately'],['📠 Scanner','Inputs pictures or documents'],['⌨️ Keyboard','Enters letters and numbers']],ins:'Tap a device, then tap what it does.',q:'Match the device to its job.',why:'Each device has its own job.'},
+{sk:'function',ins:'Detective clue: 🎵',q:'You want to listen to music. Which device helps you?',vis:'<div style="font-size:4em">🎵</div>',opts:['🔊 Speakers','⌨️ Keyboard','🖱️ Mouse','📠 Scanner'],pos:0,why:'Speakers make sound, so we can hear music.'},
+{sk:'quiz',ins:'Choose the best answer.',q:'In a quiz, what does the score tell us?',opts:['What colour the sprite is','How big the screen is','How many answers are correct','Which key to press'],pos:2,why:'The score counts how many answers are correct.'},
+{sk:'quiz',ins:'Think about your PictoBlox code.',q:'The answer is correct. What should the code do?',opts:['Delete the sprite','Say “Try again!”','Close the project','Change Score by 1'],pos:3,why:'A correct answer adds 1 to the Score variable.'},
+{sk:'io',tf:1,a:true,ins:'True or false?',q:'A microphone is an input device.',why:'A microphone puts sound IN to the computer.'},
+{sk:'function',ins:'Detective clue: 🖼️',q:'You want to see pictures on a computer. Which device displays them?',vis:'<div style="font-size:4em">🖼️</div>',opts:['🎤 Microphone','🖥️ Screen','🖱️ Mouse','⌨️ Keyboard'],pos:1,why:'A screen displays pictures and words.'},
+{sk:'features',ins:'Choose the best answer.',q:'A keyboard is easy to use. Why?',opts:['You press its keys to type','It makes loud music','It records video','It stores photos'],pos:0,why:'Keys are easy to find and press, and each key has a letter or number.'}];
+const S1IDX=[0,1,2,3,4,5,6,7,8,9];ALL.forEach((q,i)=>q.s=S1IDX.includes(i)?1:2);
+const QS={1:ALL.filter(q=>q.s==1),2:ALL.filter(q=>q.s==2)};let Q=QS[1];
+
+function renderQ(q,box,cb){box.innerHTML='';box.append(h('h3','',q.q));if(q.vis)box.append(h('div','vis',q.vis));
+ if(q.opts){const o=h('div','opts');const a=q.opts.slice(1);a.splice(q.pos,0,q.opts[0]);a.forEach((t,i)=>{const b=h('button','opt',`<span>${'ABCD'[i]}</span>${t}`);if(i==q.pos)b.dataset.ok=1;
+  b.onclick=()=>{const ok=i==q.pos;b.classList.add(ok?'right':'wrong');b.disabled=true;if(ok)o.classList.add('lock');cb(ok)};o.append(b)});box.append(o)}
+ else if(q.tf){const o=h('div','opts');[['True ✔️',true],['False ✖️',false]].forEach(([t,v])=>{const b=h('button','opt',t);if(v==q.a)b.dataset.ok=1;b.onclick=()=>{const ok=v==q.a;b.classList.add(ok?'right':'wrong');b.disabled=true;if(ok)o.classList.add('lock');cb(ok)};o.append(b)});box.append(o)}
+ else if(q.build){let n=0;const v=h('div','vis','');const draw=()=>v.innerHTML=`<div style="font-size:1.4em;min-height:60px">${T(n)}</div>`;draw();const r=h('div','row');r.style.justifyContent='center';
+  const p=h('button','alt','+ Add mark'),m=h('button','sun','− Remove'),c=h('button','','Check ✔');p.onclick=()=>{if(n<12)n++;draw()};m.onclick=()=>{if(n>0)n--;draw()};c.onclick=()=>cb(n==q.build);r.append(p,m,c);box.append(v,r)}
+ else if(q.sort){let left=q.sort.length,sel=null;const pool=h('div','row');pool.style.justifyContent='center';const Z=h('div','pair');
+ const put=(it,z)=>{if(!it||it.done)return;if(it.k==z.dataset.z){it.done=1;it.b.className='opt right';it.b.draggable=false;z.append(it.b);if(!--left)cb(true)}else cb(false);if(sel){sel.b.classList.remove('sel');sel=null}};
+ q.sort.forEach(p=>{const it={k:p[1]};it.b=h('button','opt',p[0]);it.b.draggable=true;it.b.ondragstart=e=>{e.dataTransfer.setData('text','x');sel=it};it.b.onclick=()=>{if(it.done)return;if(sel)sel.b.classList.remove('sel');sel=it;it.b.classList.add('sel')};pool.append(it.b)});
+ ['Input','Output'].forEach(n=>{const z=h('div','card center','<h3>'+(n=='Input'?'⬇️ INPUT DEVICES':'⬆️ OUTPUT DEVICES')+'</h3>');z.dataset.z=n;z.style.minHeight='130px';z.ondragover=e=>e.preventDefault();z.ondrop=e=>{e.preventDefault();put(sel,z)};z.onclick=e=>{if(e.target==z||e.target.tagName=='H3')put(sel,z)};Z.append(z)});box.append(pool,Z)}
+ else if(q.fix){const st=q.fix.map(r=>r[2]);const t=h('div','opts');const draw=()=>{t.innerHTML='';q.fix.forEach((r,i)=>{const b=h('button','opt',r[0]+' '+r[1]+' → <b>'+st[i]+'</b> (tap to change)');b.onclick=()=>{st[i]=st[i]=='Input'?'Output':'Input';draw()};t.append(b)})};draw();const c=h('button','','Check ✔');c.onclick=()=>cb(q.fix.every((r,i)=>st[i]==r[3]));box.append(t,c)}
+ else if(q.match){let sel=null,left=0;const w=h('div','pair');const L=h('div'),R=h('div');[L,R].forEach(x=>{x.style.display='grid';x.style.gap='10px'});
+  const ls=q.match.map(p=>({v:p[0],k:p[1]})).sort(()=>Math.random()-.5),rs=[...q.match].map(p=>p[1]).sort((a,b)=>typeof a=='number'?b-a:Math.random()-.5);
+  const lb=ls.map(p=>{const b=h('button','',typeof p.v=='number'?T(p.v):p.v);b.onclick=()=>{if(b.classList.contains('done'))return;lb.forEach(x=>x.classList.remove('sel'));b.classList.add('sel');sel=p;};L.append(b);return b});
+  rs.forEach(n=>{const b=h('button','',n);b.onclick=()=>{if(!sel||b.classList.contains('done'))return;if(sel.k==n){b.classList.add('done');lb[ls.indexOf(sel)].classList.replace('sel','done');sel=null;if(++left==ls.length)cb(true)}else{sel=null;lb.forEach(x=>x.classList.remove('sel'));cb(false)}};R.append(b)});w.append(L,R);box.append(w)}}
+
+function chRender(){const c=$('#chal');c.innerHTML='';sbr();
+ if(!started){c.append(h('div','card center','<div style="font-size:4em">🕵️🔎</div><h2>Session '+sess+': Ready, detectives?</h2><p>'+Q.length+' questions · 20 minutes · teams take turns.</p><button class="big alt" id="st">Start the challenge</button>'));$('#st').onclick=()=>{started=true;tA.start();chRender()};return}
+ if(done)return chEnd();
+ const q=Q[qi],tm=teams[qi%teams.length];
+ const top=h('div','card row','');top.style.justifyContent='space-between';
+ top.innerHTML=`<div><h2>Question ${qi+1} of ${Q.length}</h2><div>🕵️ ${tm.name}, your turn! ${att?'(second try: 5 points)':'(10 points)'}</div></div><div class="center"><div class="clock tA${sess}">20:00</div><div id="ctlA" class="row"></div></div>`;
+ c.append(top);ctl(tA,$('#ctlA'));tA.draw();
+ const pg=h('div','bar','<i style="width:'+(qi/Q.length*100)+'%"></i>');c.append(pg);
+ const card=h('div','card');card.append(h('div','',`<b>${q.ins}</b>`));const box=h('div');card.append(box);const fb=h('div');card.append(fb);c.append(card);
+ let over=false;att=0;
+ const fin=ok=>{over=true;box.classList.add('lock');const nx=h('button','big alt',qi+1<Q.length?'Next question ➜':'See my results 🏆');nx.onclick=()=>{qi++;if(qi>=Q.length){done=true;tA.pause()}chRender()};fb.append(nx)};
+ renderQ(q,box,ok=>{if(over)return;beep(ok);const s=tm.sk[q.sk]||(tm.sk[q.sk]={r:0,t:0});
+  if(ok){const p=att?5:10;tm.score+=p;tm.ok++;if(att)tm.second++;s.t++;s.r++;fb.innerHTML=`<div class="fb ok">⭐ Brilliant, detective! +${p} points<br>${q.why}</div>`;sbr();fin(true)}
+  else if(!att){att=1;mist.push({i:qi,team:tm.name});fb.innerHTML=`<div class="fb no">🔎 Not quite. Look carefully and try again! (second try = 5 points)</div>`;$('.top')&&0}
+  else{tm.bad++;s.t++;box.querySelectorAll('[data-ok]').forEach(b=>b.classList.add('reveal'));fb.innerHTML=`<div class="fb no">💡 Let’s learn from this: ${q.why}<br>0 points. We will review it later.</div>`;fin(false)}
+  sbr();mission.call&&0})}
+
+function chEnd(){const c=$('#chal');tA.pause();sbr();
+ const tot=teams.reduce((a,t)=>a+t.score,0),ok=teams.reduce((a,t)=>a+t.ok,0),bad=teams.reduce((a,t)=>a+t.bad,0),sec=teams.reduce((a,t)=>a+t.second,0);
+ c.innerHTML=`<div class="card center"><div style="font-size:4em">🏆⭐🎉</div><h2>Challenge complete!</h2><div class="row" style="justify-content:center"><span class="pill g1">Score ${tot}</span><span class="pill g1">Correct ${ok}</span><span class="pill g2">Second try ${sec}</span><span class="pill">Needed review ${bad}</span><span class="pill">⭐ ${'⭐'.repeat(Math.min(ok,14))}</span></div><div class="sb"></div></div>`;
+ sbr();const rv=h('div','card','<h2>🔁 Review my mistakes</h2>'+(mist.length?'<p>Try again for practice. Your score will not change.</p>':'<p>No mistakes. Amazing!</p>'));
+ mist.forEach(m=>{const q=Q[m.i],w=h('div','card');w.style.background='var(--soft)';w.innerHTML=`<b>Question ${m.i+1} · ${m.team}</b><div>${q.q}</div>`;const b=h('button','sun','Try again');const box=h('div'),fb=h('div');
+  b.onclick=()=>{b.remove();renderQ(q,box,ok=>{fb.innerHTML=ok?`<div class="fb ok">⭐ You got it! ${q.why}</div>`:'<div class="fb no">Not yet. Try another answer!</div>'})};w.append(b,box,fb);rv.append(w)});c.append(rv);
+ const ans=h('div','card','<h2>✅ All the answers</h2>'+Q.map((q,i)=>`<div><b>${i+1}.</b> ${q.q} <i>${q.why}</i></div>`).join(''));c.append(ans)}
+
+/* ---------- practical ---------- */
+const P={A:{t:'SESSION 1 – Hardware Sorter',st:['Open PictoBlox and start a new project. Pick a computer background and add a friendly robot.','Add three device sprites: Keyboard, Screen and Microphone.','When the green flag is clicked, the robot says “Click a device!”','When the Keyboard is clicked, say “Input device: it enters letters and numbers.”','When the Screen is clicked, say “Output device: it shows information.”','Do the same for the Microphone. Then test every device.'],
+ ck:['I created a new PictoBlox project','I added a robot character','I added device sprites','The robot talks when the green flag is clicked','Each device uses “when this sprite clicked”','Each device says input or output correctly','I tested every device','I can explain what each device does'],
+ hint:['Look in the Events blocks for “when this sprite clicked”.','Use a Looks block: “say Hello for 2 seconds”.','Keyboard and microphone are input. Screen is output.','Click each sprite to test it.'],
+ ext:'Add two more devices: a microphone and headphones. Say why each is an input or output device.',
+ blocks:[['ev','when 🏁 clicked'],['lk','say “Click a device!”'],['ev','when this sprite clicked'],['lk','say “Input device: it enters letters and numbers.”']]},
+B:{t:'SESSION 2 – Build your own hardware quiz',st:['Open PictoBlox, start a new project, choose a background and add a robot or computer character.','Make a variable called Score. When the green flag is clicked, set Score to 0 and show it on the stage.','Ask: “Is a keyboard an input or an output device?” and wait for the answer.','If answer = input, say “Correct!” and change Score by 1. Otherwise say “Try again!”','Add three more questions the same way: mouse (input), screen (output), speakers (output).','At the end say: “Well done, Hardware Hero! Your final score is…” and show the score. Test your quiz.'],
+ ck:['I created a new PictoBlox project','I added a character','I created a Score variable','I set the score to zero','I created a question','I checked the answer with if/else','I increased the score for a correct answer','I tested my quiz'],
+ hint:['Variables are the orange blocks. Click “Make a variable”.','“ask … and wait” is a blue Sensing block. The reply is called “answer”.','Use an if/else block from Control. Put “answer = input” inside.','Copy your first question blocks, then change the words and the right answer.'],
+ ext:'Add two more questions. Make the final message change depending on the score.',
+ blocks:[['ev','when 🏁 clicked'],['vr','set Score to 0'],['ss','ask “Is a keyboard an input or an output device?” and wait'],['ct','if answer = input then'],['lk','say “Correct!”'],['vr','change Score by 1'],['ct','else'],['lk','say “Try again!”']]}};
+const CRS={A:['Project and suitable character','Device sprites added','Uses click event','Says input/output correctly','Tests the project','Explains the devices'],B:['Project and suitable character','Creates and sets Score','Creates quiz questions','Uses answer-checking condition','Updates the score correctly','Tests quiz and shows final result']};
+let pt=0;
+function pracRender(){const d=$('#pbody'),m=P[pm];$('#tPd').className='clock tP'+sess;tP.draw();
+ ctl(tP,$('#ctlP'));
+ if(pt>=teams.length)pt=0;const tm=teams[pt];if(!tm)return;
+ d.innerHTML=`<div class="grid"><div class="card"><h2>${m.t}</h2><ol>${m.st.map(s=>`<li>${s}</li>`).join('')}</ol><p style="font-size:.8em">Software: PictoBlox. Work in pairs and take turns on the mouse.</p>
+ <h3>Blocks to build</h3><div class="blks">${m.blocks.map(b=>`<div class="blk ${b[0]}">${b[1]}</div>`).join('')}</div>
+ <h3>💡 Hints</h3><div id="hh">${m.hint.slice(0,hs).map(x=>`<div class="fb no">${x}</div>`).join('')}</div><button class="sun" id="hb">${hs<m.hint.length?'Show a hint':'No more hints'}</button>
+ <h3>🌟 Fast finishers</h3>${m.ext}</div>
+ <div class="card"><div class="row"><b>Team:</b><select id="ts">${teams.map((t,i)=>`<option value="${i}" ${i==pt?'selected':''}>${t.name}</option>`).join('')}</select></div>
+ <h3>Checklist</h3>${m.ck.map((c,i)=>`<label style="display:block;margin:6px 0"><input type="checkbox" data-i="${i}" ${tm.chk[pm][i]?'checked':''} style="width:26px;height:26px;min-height:0"> ${c}</label>`).join('')}
+ <div class="bar"><i style="width:${tm.chk[pm].reduce((a,b)=>a+b,0)/8*100}%"></i></div>
+ <h3>👩‍🏫 Teacher marking (30 points)</h3><p style="font-size:.8em">PictoBlox projects are not inspected automatically. Use the checklist to suggest marks, then adjust after watching the project.</p>
+ <div class="rub">${CRS[pm].map((c,i)=>`<div class="row" style="justify-content:space-between"><span>${c}</span><input type="number" min="0" max="5" data-r="${i}" value="${tm.prac[i]}"></div>`).join('')}</div>
+ <div class="row"><button class="alt" id="fc">Fill from checklist</button><b id="pt">Total ${pracT(tm)} / 30</b></div>
+ <p style="font-size:.8em">Teacher observation notes:</p><textarea style="width:100%;min-height:70px;border:3px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);font:inherit" placeholder="Notes…"></textarea></div></div>`;
+ $('#hb').onclick=()=>{if(hs<m.hint.length){hs++;pracRender()}};$('#ts').onchange=e=>{pt=+e.target.value;pracRender()};
+ d.querySelectorAll('[data-i]').forEach(c=>c.onchange=()=>{tm.chk[pm][c.dataset.i]=c.checked?1:0;pracRender()});
+ const upd=()=>{d.querySelectorAll('[data-r]').forEach(i=>{tm.prac[i.dataset.r]=Math.max(0,Math.min(5,+i.value||0))});$('#pt').textContent=`Total ${pracT(tm)} / 30`;sbr()};
+ d.querySelectorAll('[data-r]').forEach(i=>i.oninput=upd);
+ $('#fc').onclick=()=>{tm.prac=[[0,1],[2,3],[4],[5],[6],[7]].map(g=>g.every(i=>tm.chk[pm][i])?5:0);pracRender();sbr()}}
+
+/* ---------- results ---------- */
+const OB={hw:'2CS.01',function:'2CS.01',quiz:'2CS.01',features:'2CS.02',io:'2CS.03'};
+const SN={hw:'Hardware and software',io:'Input and output',function:'What devices do',quiz:'Quiz and score',features:'Easy-to-use features'};
+function results(){const r=$('#res');const rk=[...teams].sort((a,b)=>(b.score+bonus(b)+pracT(b))-(a.score+bonus(a)+pracT(a)));
+ const rows=rk.map((t,i)=>{const n=t.ok+t.bad,pct=n?Math.round(t.score/(n*10)*100):0;const S=Object.entries(t.sk),str=S.filter(([k,v])=>v.r/v.t>=.75).map(([k])=>SN[k]),prc=S.filter(([k,v])=>v.r/v.t<.6).map(([k])=>SN[k]);
+  return `<tr><td>${['🥇','🥈','🥉'][i]||i+1}</td><td><b>${t.name}</b></td><td>${pct}/100<br>(${t.score} pts)</td><td>${pracT(t)}/30</td><td>${t.ok} ✔ ${t.bad} ✖<br>${t.second} second try</td><td>${str.map(s=>`<span class="pill g1">${s}</span>`).join('')||'–'}</td><td>${prc.map(s=>`<span class="pill g2">${s}</span>`).join('')||'–'}</td><td>${t.extra?'🏅':'–'}</td><td><b>${t.score+bonus(t)+pracT(t)}</b></td></tr>`}).join('');
+ const ob={};teams.forEach(t=>Object.entries(t.sk).forEach(([k,v])=>{const o=OB[k];ob[o]=ob[o]||{r:0,t:0};ob[o].r+=v.r;ob[o].t+=v.t}));
+ const nm={'2CS.01':'Terminology for hardware and software','2CS.02':'Features that make devices easy to use','2CS.03':'Input and output devices'};
+ r.innerHTML=`<div class="card"><h2>🏆 Final results</h2><div style="overflow-x:auto"><table class="res"><tr><th>Rank</th><th>Team</th><th>Assessment</th><th>Practical</th><th>Answers</th><th>Strengths</th><th>Needs practice</th><th>Extra</th><th>Total</th></tr>${rows}</table></div></div>
+ <div class="card"><h2>📋 Teacher summary: Cambridge objectives</h2>${Object.keys(nm).map(k=>{const o=ob[k];const p=o?o.r/o.t:null;return `<div><span class="pill ${p==null?'':p>=.7?'g1':'g2'}">${k}</span> ${nm[k]}: ${p==null?'not assessed yet':p>=.7?'achieved ('+Math.round(p*100)+'%)':'still developing ('+Math.round(p*100)+'%)'}</div>`}).join('')}<p style="font-size:.8em">Practical evidence comes from the teacher marks above.</p></div>`}
+let snd=1,AC;function beep(ok){if(!snd)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();const o=AC.createOscillator(),g=AC.createGain();o.connect(g);g.connect(AC.destination);o.frequency.value=ok?880:220;g.gain.value=.08;o.start();o.stop(AC.currentTime+(ok?.25:.15))}catch(e){}}
+$('#snd').onclick=e=>{snd=!snd;e.target.textContent=snd?'🔊 Sound on':'🔇 Sound off'};
+</script></body></html>
